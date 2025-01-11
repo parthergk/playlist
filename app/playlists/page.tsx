@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
+import PlaylistDisplay from "@/components/PlaylistDisplay";
 
-// Define the type for a playlist item
 interface Playlist {
   id: string;
   snippet: {
@@ -14,6 +13,7 @@ interface Playlist {
       medium?: { url: string };
       high?: { url: string };
     };
+    publishedAt: string; // Added to match PlaylistDisplay interface
   };
 }
 
@@ -50,34 +50,24 @@ export default function Playlists() {
     fetchPlaylists();
   }, [accessToken]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Your YouTube Playlists</h1>
-      {playlists.length === 0 ? (
-        <p>No playlists found.</p>
-      ) : (
-        <div>
-          {playlists.map((playlist) => (
-            <div key={playlist.id} style={{ marginBottom: "20px" }}>
-              <h2>{playlist.snippet.title}</h2>
-              {playlist.snippet.thumbnails?.medium?.url && (
-                <div style={{ width: "100%", maxWidth: "300px", position: "relative", aspectRatio: "16/9" }}>
-                <Image
-                  src={playlist.snippet.thumbnails.medium.url}
-                  alt={playlist.snippet.title}
-                  layout="fill" // Ensures the image covers the container
-                  objectFit="cover" // Maintains the aspect ratio and crops as neede
-                />
-              </div>
-              )}
-              <p>{playlist.snippet.description}</p>
-            </div>
-          ))}
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+          <div className="text-red-500 text-center">
+            <p className="text-xl font-semibold mb-2">Error Loading Playlists</p>
+            <p className="text-gray-600">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return <PlaylistDisplay playlists={playlists} isLoading={loading} />;
 }
