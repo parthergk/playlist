@@ -57,10 +57,10 @@ export default function Home() {
       <div className="max-w-md mx-auto space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            YouTube Playlist Manager
+            Playlist Assignment
           </h1>
           <p className="text-gray-600">
-            Access and manage your YouTube playlists easily
+            Access YouTube playlists
           </p>
         </div>
 

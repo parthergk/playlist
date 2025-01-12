@@ -19,7 +19,6 @@ interface PlaylistsProps {
 }
 
 const PlaylistDisplay = ({ playlists, isLoading = false }: PlaylistsProps) => {
-  console.log("Playlist data", playlists);
   if (isLoading) {
     return (
       <div className="w-full h-64 flex items-center justify-center">
