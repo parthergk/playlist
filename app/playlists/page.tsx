@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import PlaylistDisplay from "@/components/PlaylistDisplay";
 
@@ -15,7 +15,7 @@ interface Playlist {
   };
 }
 
-export default function Playlists() {
+ function PlaylistsSus() {
   const searchParams = useSearchParams();
   const accessToken = searchParams ? searchParams.get("accessToken") : null;
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -69,3 +69,11 @@ export default function Playlists() {
 
   return <div className=" min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 "> <PlaylistDisplay playlists={playlists} isLoading={loading} /> </div>;
 }
+
+const Playlists:React.FC = ()=>(
+  <Suspense fallback={<div>Loading...</div>}>
+    <PlaylistsSus/>
+  </Suspense>
+)
+
+export default Playlists;
