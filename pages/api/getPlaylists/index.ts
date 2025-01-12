@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await youtube.playlists.list({
       part: ["snippet"],
       channelId: channelId, 
+      maxResults: 50,
     });
 
     res.status(200).json(response.data.items);

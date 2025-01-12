@@ -19,9 +19,11 @@ export default async function playlists(req: NextApiRequest, res: NextApiRespons
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
 
   try {
+    
     const response = await youtube.playlists.list({
       part: ["snippet"],
       mine: true,
+      maxResults: 50,
     });
 
     const playlists = response.data.items;

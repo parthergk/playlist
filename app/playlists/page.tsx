@@ -9,11 +9,9 @@ interface Playlist {
     title: string;
     description: string;
     thumbnails: {
-      default?: { url: string };
-      medium?: { url: string };
-      high?: { url: string };
+      standard: {url: string};
     };
-    publishedAt: string; // Added to match PlaylistDisplay interface
+    publishedAt: string;
   };
 }
 
@@ -21,7 +19,7 @@ export default function Playlists() {
   const searchParams = useSearchParams();
   const accessToken = searchParams ? searchParams.get("accessToken") : null;
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -69,5 +67,5 @@ export default function Playlists() {
     );
   }
 
-  return <PlaylistDisplay playlists={playlists} isLoading={loading} />;
+  return <div className=" min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 "> <PlaylistDisplay playlists={playlists} isLoading={loading} /> </div>;
 }
